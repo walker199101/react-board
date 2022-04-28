@@ -39,10 +39,14 @@ function boardReducer(state, action) {
             return state.concat(action.board);
         case "UPDATE":
             console.log("reducer: UPDATE called");
-            return state;
+            const updatedState = state.map((el) => 
+                el.id === action.board.id ? action.board : el
+            )
+            console.log(updatedState);
+            return updatedState;
         case "DELETE":
             console.log("reducer: DELETE called");
-            return state;
+            return state.filter(el => el.id !== action.id );
         default:
             throw new Error(`Unhandled action type: ${action.type}`);
     }

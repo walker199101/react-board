@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Board from './components/board';
 import BoardCreate from './components/boardCreate';
+import BoardEdit from './components/boardEdit';
 import { BoardProvider } from './boardContext';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route exact path={"/"} element={<Board />} />
           <Route path="/board" element={<Board />} />
           <Route path="/board/create" element={ <BoardCreate />} />
+          <Route path="/board/edit/:id" element={ <BoardEdit />} />
           <Route exact path={"*"} element={<h1>NOT FOUND</h1>} />
         </Routes>
       </BrowserRouter>

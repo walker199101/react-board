@@ -22,8 +22,8 @@ function Board() {
         <div className="board">
             <div className="board-header">
                 <span className="title">React Board</span>
-                <Link to="/board/create">
-                    <Button size="small" variant="contained">Create</Button>
+                <Link to="/board/create" style={{ textDecoration: "none" }}>
+                    <Button size="small" variant="contained">새 글 쓰기</Button>
                 </Link>
             </div>
             <TableContainer component={Paper}>
@@ -43,7 +43,11 @@ function Board() {
                             boardData.map((board) => (
                                 <TableRow key={board.id}>
                                     <TableCell>{board.id}</TableCell>
-                                    <TableCell>{board.title}</TableCell>
+                                    <TableCell>
+                                        <Link to={`/board/edit/${board.id}`}>
+                                            {board.title}
+                                        </Link>
+                                    </TableCell>
                                     <TableCell>{board.createdBy}</TableCell>
                                     <TableCell>{board.createdAt}</TableCell>
                                     <TableCell>{board.recommend}</TableCell>
