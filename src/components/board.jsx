@@ -11,40 +11,11 @@ import {
     Button
 } from '@mui/material';
 
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useBoardState } from './../boardContext';
 
 function Board() {
-    const rowData = [
-        {
-            id: 1,
-            title: "test-title1",
-            contents: "내용1",
-            createdBy: "user1",
-            createdAt: "2022-04-23 13:34:24",
-            recommend: "0",
-            view: "15"
-        },
-        {
-            id: 2,
-            title: "test-title2",
-            contents: "내용2",
-            createdBy: "user1",
-            createdAt: "2022-04-26 13:34:24",
-            recommend: "3",
-            view: "12"
-        },
-        {
-            id: 3,
-            title: "test-title3",
-            contents: "내용3",
-            createdBy: "user2",
-            createdAt: "2022-04-24 13:34:24",
-            recommend: "0",
-            view: "25"
-        }
-    ]
-    const [rows, setRows] = useState(rowData);
+  const boardData = useBoardState();
 
   return (
       <Container >
@@ -69,14 +40,14 @@ function Board() {
                     </TableHead>
                     <TableBody>
                         {
-                            rows.map((row) => (
-                                <TableRow key={row.id}>
-                                    <TableCell>{row.id}</TableCell>
-                                    <TableCell>{row.title}</TableCell>
-                                    <TableCell>{row.createdBy}</TableCell>
-                                    <TableCell>{row.createdAt}</TableCell>
-                                    <TableCell>{row.recommend}</TableCell>
-                                    <TableCell>{row.view}</TableCell>
+                            boardData.map((board) => (
+                                <TableRow key={board.id}>
+                                    <TableCell>{board.id}</TableCell>
+                                    <TableCell>{board.title}</TableCell>
+                                    <TableCell>{board.createdBy}</TableCell>
+                                    <TableCell>{board.createdAt}</TableCell>
+                                    <TableCell>{board.recommend}</TableCell>
+                                    <TableCell>{board.view}</TableCell>
                                 </TableRow>
                             ))
                         }

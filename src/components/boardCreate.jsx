@@ -1,24 +1,38 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+import {
+  Button,
+  TextField,
+  Grid,
+  Box,
+  Paper
+} from '@mui/material';
+
 import { useNavigate } from "react-router-dom";
 import Container from './container';
+import { useBoardState, useBoardDispatch } from './../boardContext';
+import moment from 'moment';
 
 function BoardCreate() {
   let navigate = useNavigate();
+  const board = useBoardState();
+  const dispatch = useBoardDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    console.log({
-      title: data.get('title'),
-      contents: data.get('contents'),
+    const nowTime = moment().format('YYYY-MM-DD hh:mm:ss');
+    
+    dispatch({
+      type: "CREATE",
+      board: {
+        id: board.length + 1,
+        title: data.get('title'),
+        contents: data.get('contents'),
+        createdBy: "user1",
+        createdAt: nowTime,
+        recommend: 0,
+        view: 0
+      }
     });
     navigate("/board");
   }
@@ -32,6 +46,7 @@ function BoardCreate() {
                 justifyContent="center"
             >
                 <div>새로 글쓰기</div>
+                {/* TODO: validation 추가하기 */}
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ width: 1/2, m: 3  }}>
                     <Grid container spacing={2}>
                     <Grid item xs={12}>
