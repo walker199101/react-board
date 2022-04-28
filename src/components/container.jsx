@@ -1,10 +1,9 @@
 import './container.scss';
-import Board from './board'
 
-function Container() {
+function Container({ children }) {
   return (
     <div className="container">
-        <Board />
+        {children}
     </div>
   );
 }

@@ -1,13 +1,22 @@
 import './App.css';
-import Container from './components/container';
+import { 
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+import Board from './components/board';
+import BoardCreate from './components/boardCreate';
 
 function App() {
   return (
-    <div className="App">
-      {/* <header className="App-header">
-      </header> */}
-      <Container />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path={"/"} element={<Board />} />
+        <Route path="/board" element={<Board />} />
+        <Route path="/board/create" element={ <BoardCreate />} />
+        <Route exact path={"*"} element={<h1>NOT FOUND</h1>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
