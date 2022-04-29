@@ -10,13 +10,66 @@ import {
     Paper,
     Button
 } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 
 import { Link } from "react-router-dom";
 import { useBoardState } from './../boardContext';
+import moment from 'moment';
+
+function DataTable() {
+  const boardData = useBoardState();
+  const columns = [
+    {
+        field: "id",
+        headerName: "번호",
+        width: 150,
+        renderCell: (params) => 
+        <Link to={`/board/${params.getValue(params.id, "id")}`}>
+            {params.getValue(params.id, "title")}
+        </Link>
+    },
+    {
+        field: "title",
+        headerName: "제목",
+        width: 150
+    },
+    {
+        field: "createdBy",
+        headerName: "작성자",
+        width: 150
+    },
+    {
+        field: "createdAt",
+        headerName: "날짜",
+        width: 150,
+        valueGetter: (params) => 
+        moment(params.getValue(params.id, "createdBy"), "YYYY-MM-DD")
+    },
+    {
+        field: "recommend",
+        headerName: "추천수",
+        width: 150
+    },
+    {
+        field: "view",
+        headerName: "조회수",
+        width: 150
+    }
+  ];
+  console.log(boardData);
+    return (
+        <div style={{ height: 400, width: '100%', background: 'white', borderRadius: '5px' }}>
+            <DataGrid
+                rows={boardData}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5, 10, 20]}
+            />
+        </div>
+    );
+}
 
 function Board() {
-  const boardData = useBoardState();
-
   return (
       <Container >
         <div className="board">
@@ -26,38 +79,7 @@ function Board() {
                     <Button size="small" variant="contained">새 글 쓰기</Button>
                 </Link>
             </div>
-            <TableContainer component={Paper}>
-                <Table >
-                    <TableHead>
-                    <TableRow>
-                        <TableCell>번호</TableCell>
-                        <TableCell>제목</TableCell>
-                        <TableCell>글쓴이</TableCell>
-                        <TableCell>날짜</TableCell>
-                        <TableCell>추천</TableCell>
-                        <TableCell>조회</TableCell>
-                    </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {
-                            boardData.map((board) => (
-                                <TableRow key={board.id}>
-                                    <TableCell>{board.id}</TableCell>
-                                    <TableCell>
-                                        <Link to={`/board/edit/${board.id}`}>
-                                            {board.title}
-                                        </Link>
-                                    </TableCell>
-                                    <TableCell>{board.createdBy}</TableCell>
-                                    <TableCell>{board.createdAt}</TableCell>
-                                    <TableCell>{board.recommend}</TableCell>
-                                    <TableCell>{board.view}</TableCell>
-                                </TableRow>
-                            ))
-                        }
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <DataTable />
         </div>
     </Container>
   );
