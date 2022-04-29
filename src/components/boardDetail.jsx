@@ -20,7 +20,7 @@ const DeleteButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-function BoardCreate() {
+function BoardDetail() {
   let navigate = useNavigate();
   const board = useBoardState();
   const dispatch = useBoardDispatch();
@@ -83,7 +83,7 @@ function BoardCreate() {
                 />
               </Grid>
             </Grid>
-            <div className="detail-btn-group">
+            <div className="detail-button-group">
               <DeleteButton
                 variant="contained"
                 sx={{ mt: 3, mb: 2, bgcolor: "red" }}
@@ -106,4 +106,4 @@ function BoardCreate() {
   );
 }
 
-export default BoardCreate;
+export default BoardDetail;

@@ -1,5 +1,6 @@
 import './board.scss';
 import Container from './container.jsx';
+import CSSModule from './CSSModule';
 import {
     Button
 } from '@mui/material';
@@ -56,6 +57,7 @@ function DataTable() {
             <DataGrid
                 rows={boardData}
                 columns={columns}
+                // TODO: pageSize 변경이 안 되는 버그
                 pageSize={5}
                 rowsPerPageOptions={[5, 10, 20]}
             />
@@ -67,8 +69,9 @@ function Board() {
     return (
         <Container >
             <div className="board">
+                <CSSModule />
                 <div className="board-header">
-                    <span className="title">React Board</span>
+                    <span className="title"></span>
                     <Link to="/board/create" style={{ textDecoration: "none" }}>
                         <Button size="small" variant="contained">새 글 쓰기</Button>
                     </Link>
