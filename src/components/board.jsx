@@ -15,7 +15,7 @@ function DataTable() {
     {
         field: "id",
         headerName: "번호",
-        width: 150,
+        flex: 1,
         renderCell: (params) => 
         <Link to={`/board/${params.getValue(params.id, "id")}`}>
             {params.getValue(params.id, "title")}
@@ -24,30 +24,30 @@ function DataTable() {
     {
         field: "title",
         headerName: "제목",
-        width: 150
+        flex: 2,
     },
     {
         field: "createdBy",
         headerName: "작성자",
-        width: 150
+        flex: 1
     },
     {
         field: "createdAt",
-        headerName: "날짜",
-        width: 150,
-        valueGetter: (params) => 
-            // 이유는 모르겠지만 키 이름이 createdAt의 경우는 called stack exceed 오류가 남
-            moment(params.getValue(params.id, "createdTime")).format("YYYY-MM-DD")
+        headerName: "등록일",
+        flex: 1,
+        renderCell: (params) => 
+            // 이유는 모르겠지만 moment를 valueGetter와 함께 사용할 경우 call stack exceed 오류가 남
+            <span>{moment(params.getValue(params.id, "createdAt")).format("YYYY-MM-DD")}</span>
     },
     {
         field: "recommend",
         headerName: "추천수",
-        width: 150
+        flex: 0.5
     },
     {
         field: "view",
         headerName: "조회수",
-        width: 150
+        flex: 0.5
     }
   ];
   console.log(boardData);

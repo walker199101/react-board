@@ -7,7 +7,7 @@ const initialData = [
         title: "test-title1",
         contents: "내용1",
         createdBy: "user1",
-        createdTime: "2022-04-23 13:34:24",
+        createdAt: "2022-04-23 13:34:24",
         recommend: 0,
         view: 15
     },
@@ -16,7 +16,7 @@ const initialData = [
         title: "test-title2",
         contents: "내용2",
         createdBy: "user1",
-        createdTime: "2022-04-26 13:34:24",
+        createdAt: "2022-04-26 13:34:24",
         recommend: 3,
         view: 12
     },
@@ -25,7 +25,7 @@ const initialData = [
         title: "test-title3",
         contents: "내용3",
         createdBy: "user2",
-        createdTime: "2022-04-24 13:34:24",
+        createdAt: "2022-04-24 13:34:24",
         recommend: 0,
         view: 25
     }
