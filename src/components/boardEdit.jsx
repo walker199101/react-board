@@ -13,13 +13,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import Container from './container';
 import { useBoardState, useBoardDispatch } from './../boardContext';
 
-const DeleteButton = styled(Button)( ({ theme }) => ({
-  backgroundColor: "red",
-  '&:hover': {
-    backgroundColor: "red",
-  },
-}));
-
 function BoardEdit() {
   let navigate = useNavigate();
   const board = useBoardState();
@@ -34,14 +27,6 @@ function BoardEdit() {
   });
   const [title, setTitle] = useState(currentBoard.title);
   const [contents, setContents] = useState(currentBoard.contents);
-
-  const handleClickDeleteBtn = () => {
-    dispatch({
-      type: "DELETE",
-      id: currentBoard.id
-    });
-    navigate("/board");
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -96,13 +81,6 @@ function BoardEdit() {
                     </Grid>
                     </Grid>
                     <div className="btn-group">
-                      <DeleteButton
-                      variant="contained"
-                      sx={{ mt: 3, mb: 2, bgcolor: "red" }}
-                      onClick={handleClickDeleteBtn}
-                      >
-                      삭제
-                      </DeleteButton>
                       <Button
                       type="submit"
                       variant="contained"

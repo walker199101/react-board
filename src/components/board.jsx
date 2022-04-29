@@ -1,13 +1,6 @@
 import './board.scss';
 import Container from './container.jsx';
 import {
-    Table,
-    TableContainer,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow,
-    Paper,
     Button
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
@@ -43,7 +36,8 @@ function DataTable() {
         headerName: "날짜",
         width: 150,
         valueGetter: (params) => 
-        moment(params.getValue(params.id, "createdBy"), "YYYY-MM-DD")
+            // 이유는 모르겠지만 키 이름이 createdAt의 경우는 called stack exceed 오류가 남
+            moment(params.getValue(params.id, "createdTime")).format("YYYY-MM-DD")
     },
     {
         field: "recommend",
