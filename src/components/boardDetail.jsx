@@ -11,7 +11,7 @@ import { styled } from '@mui/material/styles';
 import { useNavigate, useParams } from "react-router-dom";
 import Container from './container';
 import { useBoardState, useBoardDispatch } from './../boardContext';
-import moment from 'moment';
+import './boardDetail.scss';
 
 const DeleteButton = styled(Button)( ({ theme }) => ({
     backgroundColor: "red",
@@ -83,7 +83,7 @@ function BoardCreate() {
                         />
                     </Grid>
                     </Grid>
-                    <div className="btn-group">
+                    <div className="detail-btn-group">
                       <DeleteButton
                       variant="contained"
                       sx={{ mt: 3, mb: 2, bgcolor: "red" }}

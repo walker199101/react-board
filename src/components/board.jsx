@@ -15,16 +15,16 @@ function DataTable() {
     {
         field: "id",
         headerName: "번호",
-        flex: 1,
-        renderCell: (params) => 
-        <Link to={`/board/${params.getValue(params.id, "id")}`}>
-            {params.getValue(params.id, "title")}
-        </Link>
+        flex: 1
     },
     {
         field: "title",
         headerName: "제목",
         flex: 2,
+        renderCell: (params) => 
+        <Link to={`/board/${params.getValue(params.id, "id")}`}>
+            {params.getValue(params.id, "title")}
+        </Link>
     },
     {
         field: "createdBy",
