@@ -1,5 +1,5 @@
 import './App.css';
-import { 
+import {
   BrowserRouter,
   Routes,
   Route
@@ -18,8 +18,8 @@ function App() {
           <Route exact path={"/"} element={<Board />} />
           <Route path="/board" element={<Board />} />
           <Route path="/board/:id" element={<BoardDetail />} />
-          <Route path="/board/create" element={ <BoardCreate />} />
-          <Route path="/board/edit/:id" element={ <BoardEdit />} />
+          <Route path="/board/create" element={<BoardCreate />} />
+          <Route path="/board/edit/:id" element={<BoardEdit />} />
           <Route exact path={"*"} element={<h1>NOT FOUND</h1>} />
         </Routes>
       </BrowserRouter>

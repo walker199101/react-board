@@ -3,7 +3,7 @@ import './container.scss';
 function Container({ children }) {
   return (
     <div className="container">
-        {children}
+      {children}
     </div>
   );
 }

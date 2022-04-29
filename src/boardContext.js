@@ -39,14 +39,14 @@ function boardReducer(state, action) {
             return state.concat(action.board);
         case "UPDATE":
             console.log("reducer: UPDATE called");
-            const updatedState = state.map((el) => 
+            const updatedState = state.map((el) =>
                 el.id === action.board.id ? action.board : el
             )
             console.log(updatedState);
             return updatedState;
         case "DELETE":
             console.log("reducer: DELETE called");
-            return state.filter(el => el.id !== action.id );
+            return state.filter(el => el.id !== action.id);
         default:
             throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -61,13 +61,13 @@ const BoardDispatchContext = createContext();
 export function BoardProvider({ children }) {
     const [state, dispatch] = useReducer(boardReducer, initialData);
     // const nextId = useRef(5);
-  
+
     return (
-      <BoardStateContext.Provider value={state}>
-        <BoardDispatchContext.Provider value={dispatch}>
-            {children}
-        </BoardDispatchContext.Provider>
-      </BoardStateContext.Provider>
+        <BoardStateContext.Provider value={state}>
+            <BoardDispatchContext.Provider value={dispatch}>
+                {children}
+            </BoardDispatchContext.Provider>
+        </BoardStateContext.Provider>
     );
 }
 
@@ -75,7 +75,7 @@ export function BoardProvider({ children }) {
 export function useBoardState() {
     const context = useContext(BoardStateContext);
     if (!context) {
-      throw new Error("Cannot find BoardProvider");
+        throw new Error("Cannot find BoardProvider");
     }
     return context;
 }
@@ -83,7 +83,7 @@ export function useBoardState() {
 export function useBoardDispatch() {
     const context = useContext(BoardDispatchContext);
     if (!context) {
-      throw new Error("Cannot find BoardProvider");
+        throw new Error("Cannot find BoardProvider");
     }
     return context;
 }
