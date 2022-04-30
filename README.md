@@ -37,4 +37,13 @@
   
   - 참고) https://react.vlpt.us/basic/22-context-dispatch.html
 
+- 게시글 수정 페이지 추가
+
+- 등록일 표시 수정 (moment.js)
+
+- Material UI 테이블(data-grid) 표시를 반응형으로 수정 (flex prop)
+
+- prettier, snippet, css module 도입
+
+    - 참고) https://react.vlpt.us/basic/27-useful-tools.html
 
