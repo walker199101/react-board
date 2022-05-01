@@ -14,20 +14,20 @@ import moment from 'moment';
 
 function BoardCreate() {
   let navigate = useNavigate();
-  const board = useBoardState();
+  const state = useBoardState();
   const dispatch = useBoardDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
+    const formData = new FormData(e.currentTarget);
     const nowTime = moment().format('YYYY-MM-DD hh:mm:ss');
     
     dispatch({
       type: "CREATE",
       board: {
-        id: board.length + 1,
-        title: data.get('title'),
-        contents: data.get('contents'),
+        id: state.data.length + 1,
+        title: formData.get('title'),
+        contents: formData.get('contents'),
         createdBy: "user1",
         createdAt: nowTime,
         recommend: 0,

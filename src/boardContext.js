@@ -1,52 +1,58 @@
 import React, { useReducer, createContext, useContext, useRef } from "react";
+import axios from 'axios';
 
 // 초기 data
-const initialData = [
-    {
-        id: 1,
-        title: "test-title1",
-        contents: "내용1",
-        createdBy: "user1",
-        createdAt: "2022-04-23 13:34:24",
-        recommend: 0,
-        view: 15
-    },
-    {
-        id: 2,
-        title: "test-title2",
-        contents: "내용2",
-        createdBy: "user1",
-        createdAt: "2022-04-26 13:34:24",
-        recommend: 3,
-        view: 12
-    },
-    {
-        id: 3,
-        title: "test-title3",
-        contents: "내용3",
-        createdBy: "user2",
-        createdAt: "2022-04-24 13:34:24",
-        recommend: 0,
-        view: 25
-    }
-];
+const initialData = {
+    loading: true,
+    data: [],
+    error: null
+};
 
-// reducer
+// 성공했을 때의 상태 만들어주는 함수
+const success = data => ({
+    loading: false,
+    data,
+    error: null
+});
+
+// 실패했을 때의 상태 만들어주는 함수
+const error = error => ({
+    loading: false,
+    data: [],
+    error: error
+});
+
+// reducer + axios
+// reducer: state를 action을 이용해 갱신한다
 function boardReducer(state, action) {
     switch (action.type) {
+        case "GET":
+            console.log("axios reducer: GET called");
+            return state;
+        case "GET_SUCCESS":
+            console.log("axios reducer: GET_SUCCESS called");
+            return success(action.data);
+        case "GET_ERROR":
+            console.log("axios reducer: GET_ERROR called");
+            return error(action.error);
+        case "GET_LIST":
+            console.log("axios reducer: GET_LIST called");
+            return state;
+        case "GET_LIST_SUCCESS":
+            console.log("axios reducer: GET_LIST_SUCCESS called");
+            return success(action.data);
+        case "GET_LIST_ERROR":
+            console.log("axios reducer: GET_LIST_ERROR called");
+            return error(action.error);
         case "CREATE":
-            console.log("reducer: CREATE called");
-            return state.concat(action.board);
+            console.log("axios reducer: CREATE called");
+            return state;
         case "UPDATE":
-            console.log("reducer: UPDATE called");
-            const updatedState = state.map((el) =>
-                el.id === action.board.id ? action.board : el
-            )
-            console.log(updatedState);
-            return updatedState;
+            console.log("axios reducer: UPDATE called");
+            return state;
         case "DELETE":
-            console.log("reducer: DELETE called");
-            return state.filter(el => el.id !== action.id);
+            console.log("axios reducer: DELETE called");
+            return state;
         default:
             throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -60,7 +66,6 @@ const BoardDispatchContext = createContext();
 // * 계층 구조로 생성하여 바깥쪽 프로바이더의 리렌더링 줄이기
 export function BoardProvider({ children }) {
     const [state, dispatch] = useReducer(boardReducer, initialData);
-    // const nextId = useRef(5);
 
     return (
         <BoardStateContext.Provider value={state}>
@@ -86,6 +91,30 @@ export function useBoardDispatch() {
         throw new Error("Cannot find BoardProvider");
     }
     return context;
+}
+
+export async function getBoardList(dispatch) {
+    dispatch({ type: 'GET_LIST' });
+    try {
+        const response = await axios.get(
+            'http://localhost:5050/posts'
+        );
+        dispatch({ type: 'GET_LIST_SUCCESS', data: response.data });
+    } catch (e) {
+        dispatch({ type: 'GET_LIST_ERROR', error: e });
+    }
+}
+
+export async function getBoard(dispatch, id) {
+    dispatch({ type: 'GET' });
+    try {
+        const response = await axios.get(
+            `http://localhost:5050/posts/${id}`
+        );
+        dispatch({ type: 'GET_SUCCESS', data: response.data });
+    } catch (e) {
+        dispatch({ type: 'GET_ERROR', error: e });
+    }
 }
 
 // *context 정리

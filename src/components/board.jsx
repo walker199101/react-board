@@ -7,11 +7,18 @@ import {
 import { DataGrid } from '@mui/x-data-grid';
 
 import { Link } from "react-router-dom";
-import { useBoardState } from './../boardContext';
+import { useBoardState, useBoardDispatch, getBoardList } from './../boardContext';
 import moment from 'moment';
+import { useEffect } from 'react';
 
 function DataTable() {
-    const boardData = useBoardState();
+    const state = useBoardState();
+    const { data, loading, error } = state;
+    const dispatch = useBoardDispatch();
+    useEffect(() => {
+        getBoardList(dispatch);
+    }, [dispatch]);
+
     const columns = [
         {
             field: "id",
@@ -51,12 +58,14 @@ function DataTable() {
             flex: 0.5
         }
     ];
-    console.log(boardData);
     return (
         <div style={{ height: 400, width: '100%', background: 'white', borderRadius: '5px' }}>
             <DataGrid
-                rows={boardData}
+                rows={data}
                 columns={columns}
+                // TODO: 리스트 값 다시 리로드할 때 로딩 표시가 안 보임  
+                loading={loading}
+                error={error}
                 // TODO: pageSize 변경이 안 되는 버그
                 pageSize={5}
                 rowsPerPageOptions={[5, 10, 20]}

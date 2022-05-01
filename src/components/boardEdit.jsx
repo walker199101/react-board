@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './boardEdit.scss';
 import {
   Button,
@@ -10,33 +10,32 @@ import {
 
 import { useNavigate, useParams } from "react-router-dom";
 import Container from './container';
-import { useBoardState, useBoardDispatch } from './../boardContext';
+import { useBoardState, useBoardDispatch, getBoard } from './../boardContext';
 
 function BoardEdit() {
   let navigate = useNavigate();
-  const board = useBoardState();
+  const state = useBoardState();
+  const { data, loading, error } = state;
   const dispatch = useBoardDispatch();
   let { id } = useParams();
-  let currentBoard;
-  board.forEach((el) => {
-    if (el.id === Number(id)) {
-      currentBoard = el;
-      return;
-    }
-  });
-  const [title, setTitle] = useState(currentBoard.title);
-  const [contents, setContents] = useState(currentBoard.contents);
+
+  useEffect(() => {
+    getBoard(dispatch, id);
+  }, []);
+
+  const [title, setTitle] = useState(data.title);
+  const [contents, setContents] = useState(data.contents);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
+    const formData = new FormData(e.currentTarget);
 
     dispatch({
       type: "UPDATE",
       board: {
-        ...currentBoard,
-        title: data.get('title'),
-        contents: data.get('contents')
+        ...data,
+        title: formData.get('title'),
+        contents: formData.get('contents')
       }
     });
     navigate("/board");

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Button,
   TextField,
@@ -10,7 +10,7 @@ import { styled } from '@mui/material/styles';
 
 import { useNavigate, useParams } from "react-router-dom";
 import Container from './container';
-import { useBoardState, useBoardDispatch } from './../boardContext';
+import { useBoardState, useBoardDispatch, getBoard } from './../boardContext';
 import './boardDetail.scss';
 
 const DeleteButton = styled(Button)(({ theme }) => ({
@@ -22,23 +22,18 @@ const DeleteButton = styled(Button)(({ theme }) => ({
 
 function BoardDetail() {
   let navigate = useNavigate();
-  const board = useBoardState();
+  const state = useBoardState();
+  const { data, loading, error } = state;
   const dispatch = useBoardDispatch();
   let { id } = useParams();
-  let currentBoard;
-  board.forEach((el) => {
-    if (el.id === Number(id)) {
-      currentBoard = el;
-      return;
-    }
-  });
-  const [title, setTitle] = useState(currentBoard.title);
-  const [contents, setContents] = useState(currentBoard.contents);
+  useEffect(() => {
+    getBoard(dispatch, id);
+  }, []);
 
   const handleClickDeleteBtn = () => {
     dispatch({
       type: "DELETE",
-      id: currentBoard.id
+      id: data.id
     });
     navigate("/board");
   }
@@ -61,7 +56,7 @@ function BoardDetail() {
                   id="title"
                   label="제목"
                   name="title"
-                  value={title}
+                  value={data.title}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -76,7 +71,7 @@ function BoardDetail() {
                   id="contents"
                   label="내용"
                   name="contents"
-                  value={contents}
+                  value={data.contents}
                   InputProps={{
                     readOnly: true,
                   }}
